@@ -9,8 +9,10 @@ import { Form } from "@/components/ui/form";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 const LoginForm = () => {
+  const [isPending,setIsPending]=useState(false)
   const form = useForm<z.infer<typeof UserLoginSchema>>({
     resolver: zodResolver(UserLoginSchema),
     defaultValues: {
@@ -19,8 +21,10 @@ const LoginForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof UserLoginSchema>) {
+  async function onSubmit(values: z.infer<typeof UserLoginSchema>) {
     console.log(values);
+    setIsPending(false)
+    
   }
 
   return (
@@ -33,7 +37,7 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel className="input-label">Email</FormLabel>
               <FormControl>
-                <Input placeholder="Enter email..." className="input-field" type="email"{...field} />
+                <Input placeholder="Enter email..." className="input-field" type="email"{...field} disabled={isPending}/>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -46,13 +50,13 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel className="input-label">Password</FormLabel>
               <FormControl>
-                <Input placeholder="******" className="input-field" {...field} />
+                <Input placeholder="******" className="input-field" {...field} disabled={isPending}/>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Login</Button>
+        <Button type="submit" className="uppercase w-full bg-[#2658ff] rounded" disabled={isPending}>Login</Button>
       </form>
     </Form>
   );
