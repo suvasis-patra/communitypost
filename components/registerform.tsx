@@ -1,0 +1,75 @@
+"use client";
+
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { UserRegistrationSchema } from "@/lib/validation";
+import { Form } from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
+const RegisterForm = () => {
+  const form = useForm<z.infer<typeof UserRegistrationSchema>>({
+    resolver: zodResolver(UserRegistrationSchema),
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof UserRegistrationSchema>) {
+    console.log(values);
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="input-label">Username</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter username..." className="input-field" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="input-label">Email</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter email..." type="email" className="input-field" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="input-label">Password</FormLabel>
+              <FormControl>
+                <Input placeholder="******" type="password" className="input-field" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="uppercase w-full bg-[#2658ff] rounded">register</Button>
+      </form>
+    </Form>
+  );
+};
+
+export default RegisterForm;
