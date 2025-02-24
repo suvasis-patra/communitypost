@@ -10,8 +10,12 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/f
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { login } from "@/lib/actions/auth/auth";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const LoginForm = () => {
+  const router=useRouter()
   const [isPending,setIsPending]=useState(false)
   const form = useForm<z.infer<typeof UserLoginSchema>>({
     resolver: zodResolver(UserLoginSchema),
@@ -22,9 +26,12 @@ const LoginForm = () => {
   });
 
   async function onSubmit(values: z.infer<typeof UserLoginSchema>) {
-    console.log(values);
+    setIsPending(true)
+    const result=await login(values)
+    if(result.success){
+      router.push("/")
+    }
     setIsPending(false)
-    
   }
 
   return (
@@ -50,13 +57,14 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel className="input-label">Password</FormLabel>
               <FormControl>
-                <Input placeholder="******" className="input-field" {...field} disabled={isPending}/>
+                <Input placeholder="******" className="input-field" {...field} disabled={isPending} type="password"/>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="uppercase w-full bg-[#2658ff] rounded" disabled={isPending}>Login</Button>
+        <Button type="submit" className="uppercase w-full bg-[#2658ff] rounded hover:bg-[#4c69d4] shadow" disabled={isPending}>Login</Button>
+        <p className="text-center">New here? <Link href={"/register"} className="underline">register</Link></p>
       </form>
     </Form>
   );

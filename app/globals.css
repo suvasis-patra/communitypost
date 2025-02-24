@@ -127,4 +127,7 @@
   .input-field{
     @apply h-12 min-w-80
   }
+  .submit-btn{
+    @apply uppercase w-full bg-[#2658ff] rounded hover:bg-[#e8edff] shadow
+  }
 }

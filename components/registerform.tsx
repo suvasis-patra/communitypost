@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { register } from "@/lib/actions/auth/auth";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const RegisterForm = () => {
   const [isPending,setIsPending]=useState(false)
@@ -78,7 +79,8 @@ const RegisterForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="uppercase w-full bg-[#2658ff] rounded" disabled={isPending}>register</Button>
+        <Button type="submit" className="uppercase w-full bg-[#2658ff] rounded hover:bg-[#4c69d4] shadow" disabled={isPending}>register</Button>
+        <p className="text-center">Already have an account? <Link href={"/login"} className="underline">login</Link></p>
       </form>
     </Form>
   );
