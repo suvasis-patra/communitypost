@@ -2,10 +2,9 @@ import Credentials from "next-auth/providers/credentials"
 import type { NextAuthConfig } from "next-auth"
 import { UserLoginSchema } from "./lib/validation"
 import { checkPassword } from "./lib/index"
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "./lib/prisma"
 
 
-const prisma=new PrismaClient()
  
 export default { providers: [
     Credentials({

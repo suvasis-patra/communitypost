@@ -1,9 +1,9 @@
 'use server'
 
 import { auth } from "@/auth"
-import { Role,PrismaClient, Status } from "@prisma/client"
+import { prisma } from "@/lib/prisma"
+import { Role,Status } from "@prisma/client"
 
-const prisma=new PrismaClient()
 
 export const approvePost=async(postId:string)=>{
     const session= await auth()

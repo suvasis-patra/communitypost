@@ -1,12 +1,12 @@
 'use server'
 import { z } from "zod";
-import {PrismaClient, Role, Status} from "@prisma/client"
+import { Role, Status} from "@prisma/client"
 
 import { PostSchema } from "@/lib/validation";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import { prisma } from "@/lib/prisma";
 
-const prisma=new PrismaClient()
 
 export const createPost=async(postData:z.infer<typeof PostSchema>)=>{
     const session = await auth()

@@ -1,12 +1,11 @@
 'use server'
 import { z } from "zod"
-import {PrismaClient} from "@prisma/client"
 import bcrypt from "bcryptjs"
 
 import { UserLoginSchema, UserRegistrationSchema } from "@/lib/validation"
 import { signIn, signOut } from "@/auth"
+import { prisma } from "@/lib/prisma"
 
-const prisma=new PrismaClient()
 
 export const register=async(userData:z.infer<typeof UserRegistrationSchema>)=>{
     const validatedFields= UserRegistrationSchema.safeParse(userData)
